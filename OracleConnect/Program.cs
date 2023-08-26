@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using OracleConnect.DB;
 using OracleConnect.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAddUser, AddUser>();
+builder.Services.AddScoped<IValidator<UserDto>, ValidationUserDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<ValidationUserDto>();
+builder.Services.AddScoped<Validation>();
 builder.Services.AddDbContext<ConnectionOracle>(opt => opt.UseOracle(builder.Configuration.GetConnectionString("connection-db")));
 var app = builder.Build();
 
