@@ -39,7 +39,21 @@ namespace OracleConnect.Controllers
         [HttpGet("GetUserByName")]
         public async Task<List<User>>GetUserByName(string name)
         {
-            return await _addUser.GaetUserByName(name);
+            return await _addUser.GetUserByName(name);
+        }
+        [HttpDelete("DeleteUserById")]
+        public async Task<bool>DeleteUserById(int id)
+        {
+            if (id == 0)
+            {
+                return false;
+            }
+            bool answer = await _addUser.DeleteUserById(id);
+            if (answer == true) 
+            {
+                return true;
+            }
+            return false;
         }
 
     }

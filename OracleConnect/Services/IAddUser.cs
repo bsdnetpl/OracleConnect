@@ -6,6 +6,7 @@ namespace OracleConnect.Services
     {
         Task<User> AddNewUser(UserDto userDto);
         Task<List<User>> GetAllUser();
-        Task<List<User>> GaetUserByName(string name);
+        Task<List<User>> GetUserByName(string name);
+        Task<bool> DeleteUserById(int id);
     }
 }

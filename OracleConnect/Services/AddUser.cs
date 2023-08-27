@@ -27,10 +27,21 @@ namespace OracleConnect.Services
             var users = await _connectionOracle.users.ToListAsync();
             return users;
         }
-        public async Task<List<User>> GaetUserByName(string name)
+        public async Task<List<User>> GetUserByName(string name)
         {
             var user =await _connectionOracle.users.Where(s => s.Name == name).ToListAsync();
             return user;
+        }
+        public async Task <bool>DeleteUserById(int id)
+        {
+            var userDel = await _connectionOracle.users.FirstOrDefaultAsync(s => s.Id == id);
+            if (userDel != null)
+            {
+                _connectionOracle.users.Remove(userDel);
+                await _connectionOracle.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }
